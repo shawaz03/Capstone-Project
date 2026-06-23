@@ -16,10 +16,41 @@ app.get('/', async (req, res) => {
     res.send("Welcome to the In-Memory API");
 });
 
+const mapDealership = (d) => {
+  return {
+    _id: "60d5ec9f7f8b9a2b8c8b" + d.id.toString(16).padStart(4, '0'),
+    id: d.id,
+    city: d.city,
+    state: d.state,
+    address: d.address,
+    zip: d.zip,
+    lat: d.lat,
+    long: d.long,
+    short_name: d.short_name,
+    full_name: d.full_name
+  };
+};
+
+const mapReview = (r) => {
+  return {
+    _id: "60d5ec9f7f8b9a2b8c8c" + r.id.toString(16).padStart(4, '0'),
+    id: r.id,
+    name: r.name,
+    dealership: r.dealership,
+    review: r.review,
+    purchase: r.purchase,
+    purchase_date: r.purchase_date,
+    car_make: r.car_make,
+    car_model: r.car_model,
+    car_year: r.car_year
+  };
+};
+
 // Express route to fetch all reviews
 app.get('/fetchReviews', async (req, res) => {
   try {
-    res.json(reviews_data['reviews'] || reviews_data);
+    const list = reviews_data['reviews'] || reviews_data;
+    res.json(list.map(mapReview));
   } catch (error) {
     res.status(500).json({ error: 'Error fetching documents' });
   }
@@ -30,7 +61,7 @@ app.get('/fetchReviews/dealer/:id', async (req, res) => {
   try {
     const dealerId = parseInt(req.params.id);
     const reviews = (reviews_data['reviews'] || reviews_data).filter(r => r.dealership === dealerId);
-    res.json(reviews);
+    res.json(reviews.map(mapReview));
   } catch (error) {
     res.status(500).json({ error: 'Error fetching documents' });
   }
@@ -39,7 +70,8 @@ app.get('/fetchReviews/dealer/:id', async (req, res) => {
 // Express route to fetch all dealerships
 app.get('/fetchDealers', async (req, res) => {
   try {
-    res.json(dealerships_data['dealerships'] || dealerships_data);
+    const list = dealerships_data['dealerships'] || dealerships_data;
+    res.json(list.map(mapDealership));
   } catch (error) {
     res.status(500).json({ error: 'Error fetching documents' });
   }
@@ -52,7 +84,7 @@ app.get('/fetchDealers/:state', async (req, res) => {
     const dealers = (dealerships_data['dealerships'] || dealerships_data).filter(
       d => d.state.toLowerCase() === state
     );
-    res.json(dealers);
+    res.json(dealers.map(mapDealership));
   } catch (error) {
     res.status(500).json({ error: 'Error fetching documents' });
   }
@@ -65,7 +97,7 @@ app.get('/fetchDealer/:id', async (req, res) => {
     const dealers = (dealerships_data['dealerships'] || dealerships_data).filter(
       d => d.id === dealerId
     );
-    res.json(dealers);
+    res.json(dealers.map(mapDealership));
   } catch (error) {
     res.status(500).json({ error: 'Error fetching documents' });
   }
@@ -92,7 +124,7 @@ app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
     };
 
     list.push(review);
-    res.json(review);
+    res.json(mapReview(review));
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Error inserting review' });

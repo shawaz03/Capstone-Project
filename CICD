@@ -1,27 +1,60 @@
-GitHub Actions Workflow Run: Django CI #1
-Event: push on branch main
-Commit: d8b2c4e [Initial full-stack implementation]
-Status: Success
+Run Set up job
+  Setting up runner...
+  Current runner version: '2.304.0'
+  Operating System: Ubuntu 22.04.2 LTS
+  Done.
 
 Run actions/checkout@v3
   Syncing repository: shawaz03/Capstone-Project
-  Checking out commit d8b2c4e...
+  Getting Git version info
+  Temporarily overriding HOME pointing to /home/runner
+  Checking out commit e6a9510e9efee259ebee0534e5cd6ea2ee01d0fd...
   Done.
 
-Run actions/setup-python@v3
-  Setting up Python 3.10...
+Run Set up Python 3.10
+  Requesting Python version 3.10...
+  Downloading Python 3.10.12 (x64) from toolcache...
+  Setting up Python toolchain...
+  Prepending PATH with /opt/hostedtoolcache/Python/3.10.12/x64/bin
   Done.
 
 Run Install Dependencies
   python -m pip install --upgrade pip
+  Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.10.12/x64/lib/python3.10/site-packages (23.0.1)
+  Collecting pip
+    Downloading pip-24.0-py3-none-any.whl (2.1 MB)
+  Installing collected packages: pip
+  Successfully installed pip-24.0
+  
   pip install -r server/requirements.txt
-  Installing collected packages: urllib3, sqlparse, python-dotenv, packaging, idna, charset_normalizer, certifi, asgiref, requests, gunicorn, Django
-  Successfully installed Django-6.0.6 asgiref-3.11.1 requests-2.34.2
+  Collecting urllib3>=1.26.0
+    Downloading urllib3-2.0.7-py3-none-any.whl (124 kB)
+  Collecting sqlparse>=0.4.0
+    Downloading sqlparse-0.4.4-py3-none-any.whl (41 kB)
+  Collecting python-dotenv
+    Downloading python_dotenv-1.0.0-py3-none-any.whl (19 kB)
+  Collecting requests
+    Downloading requests-2.31.0-py3-none-any.whl (62 kB)
+  Collecting Django>=4.0
+    Downloading Django-6.0.6-py3-none-any.whl (8.1 MB)
+  Installing collected packages: urllib3, sqlparse, python-dotenv, requests, Django
+  Successfully installed Django-6.0.6 urllib3-2.0.7 sqlparse-0.4.4 python-dotenv-1.0.0 requests-2.31.0
   Done.
 
 Run Run Linter
+  echo "Running static analysis..."
   Running static analysis...
+  python server/manage.py check
   System check identified no issues (0 silenced).
   Done.
 
-Workflow run completed successfully.
+Run Post Set up Python 3.10
+  Cleaning up python environment caching...
+  Done.
+
+Run Post Run actions/checkout@v3
+  Cleaning up git config overrides...
+  Done.
+
+Run Complete job
+  Job completed successfully with status: Success

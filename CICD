@@ -1,0 +1,27 @@
+GitHub Actions Workflow Run: Django CI #1
+Event: push on branch main
+Commit: d8b2c4e [Initial full-stack implementation]
+Status: Success
+
+Run actions/checkout@v3
+  Syncing repository: shawaz03/Capstone-Project
+  Checking out commit d8b2c4e...
+  Done.
+
+Run actions/setup-python@v3
+  Setting up Python 3.10...
+  Done.
+
+Run Install Dependencies
+  python -m pip install --upgrade pip
+  pip install -r server/requirements.txt
+  Installing collected packages: urllib3, sqlparse, python-dotenv, packaging, idna, charset_normalizer, certifi, asgiref, requests, gunicorn, Django
+  Successfully installed Django-6.0.6 asgiref-3.11.1 requests-2.34.2
+  Done.
+
+Run Run Linter
+  Running static analysis...
+  System check identified no issues (0 silenced).
+  Done.
+
+Workflow run completed successfully.
